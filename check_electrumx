@@ -113,11 +113,11 @@ shift $((OPTIND-1))
 # collect data
 
 EL_RPCDATA=$(${RPC} getinfo)
-EL_HEIGHT=$(echo ${EL_RPCDATA} | ${JQ} -r .db_height)
+EL_HEIGHT=$(echo ${EL_RPCDATA} | ${JQ} -r '."db height"')
 EL_UPTIME=$(echo ${EL_RPCDATA} | ${JQ} -r .uptime)
 EL_UPTIME_DAYS=$(echo ${EL_UPTIME} | ${AWK} '{print $1}' | sed s/d//)
-EL_ERRORS=$(echo ${EL_RPCDATA} | ${JQ} -r .errors)
-EL_SESSIONS=$(echo ${EL_RPCDATA} | ${JQ} -r .sessions)
+EL_ERRORS=$(echo ${EL_RPCDATA} | ${JQ} -r .sessions.errors)
+EL_SESSIONS=$(echo ${EL_RPCDATA} | ${JQ} -r .sessions.count)
 EL_VERSION=$(echo ${EL_RPCDATA} | ${JQ} -r .version)
 
 DATE_START=$(date -d "${EL_UPTIME_DAYS} days ago" +%s)
